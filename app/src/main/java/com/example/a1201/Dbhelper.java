@@ -2,6 +2,7 @@ package com.example.a1201;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -43,6 +44,17 @@ public class Dbhelper extends SQLiteOpenHelper {
     public boolean rogzites(String vezeteknev , String keresztnev , int jegy){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put(Col_VEZNEV , vezeteknev);
+        values.put(Col_KERNEV , keresztnev);
+        values.put(Col_JEGY , jegy);
+        return db.insert(Table_Name, null , values) != -1;
+    }
+
+    public Cursor listaz(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(Table_Name ,
+                new String[]{Col_ID , Col_VEZNEV , Col_KERNEV , Col_JEGY},
+                null , null , null , null , null);
     }
 
 }
